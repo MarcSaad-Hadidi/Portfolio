@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: Portfolio terminal
+        - generic [ref=e11]: Boot sequence
+      - generic [ref=e19]:
+        - paragraph [ref=e20]: Marc Saad-Hadidi
+        - heading "Workspace booting" [level=1] [ref=e21]
+        - paragraph [ref=e22]: Syncing the 3D room, retro terminal and camera system before reveal.
+      - generic [ref=e25]:
+        - generic [ref=e26]: Preparing download
+        - generic [ref=e27]: Measured GLB transfer
+      - generic [ref=e28]:
+        - generic [ref=e29]: "[OK] WebGL renderer handshake"
+        - generic [ref=e30]: "[OK] CRT terminal texture stream"
+        - generic [ref=e31]: "[OK] Camera controls locked"
+        - generic [ref=e32]: "[..] Loading room geometry"
+        - generic [ref=e33]: "[..] Mounting portfolio interface"
+  - alert [ref=e34]

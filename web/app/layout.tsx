@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Workspace3D from '@/components/Workspace3D';
 
 // Removed TerminalOS as it is now integrated into Workspace3D via texture
 
 export const metadata: Metadata = {
-  title: 'John Doe | Creative Developer',
-  description: 'Interactive Portfolio',
+  title: 'Marc Saad-Hadidi | Software Engineering Portfolio',
+  description: 'Interactive portfolio of Marc Saad-Hadidi, software engineering student in Montreal.',
 };
 
 export default function RootLayout({

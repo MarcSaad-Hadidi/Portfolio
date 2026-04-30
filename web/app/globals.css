@@ -7,9 +7,82 @@
   --foreground: #f0f0f0;
 }
 
+html,
 body {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
   color: var(--foreground);
   background: var(--background);
+}
+
+.portfolio-experience,
+.portfolio-scene-root,
+.portfolio-canvas-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #060706;
+}
+
+.portfolio-canvas-stage {
+  transition-property: opacity;
+  transition-duration: 700ms;
+  transition-timing-function: ease;
+}
+
+.portfolio-canvas-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.portfolio-terminal-guide {
+  pointer-events: none;
+  position: fixed;
+  left: clamp(16px, 4vw, 32px);
+  top: clamp(16px, 4vw, 32px);
+  z-index: 10;
+  max-width: min(24rem, calc(100dvw - 32px));
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(186, 255, 155, 0.75);
+}
+
+.portfolio-room-guide-wrap {
+  pointer-events: none;
+  position: fixed;
+  inset-inline: 0;
+  bottom: clamp(18px, 5vh, 44px);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding-inline: 16px;
+}
+
+.portfolio-room-guide {
+  border: 1px solid rgba(156, 255, 122, 0.3);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 12px 20px;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #d9ffd1;
+  box-shadow: 0 0 32px rgba(51, 255, 0, 0.12);
+  backdrop-filter: blur(8px);
+  text-align: center;
 }
 
 /* Custom scrollbar if needed, but we are hiding overflow for the POC hero */
@@ -34,4 +107,360 @@ body {
   background: rgba(51, 255, 0, 0.05);
   animation: scanline 4s linear infinite;
   box-shadow: 0 0 10px rgba(51, 255, 0, 0.1);
+}
+
+.portfolio-loader-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 255, 107, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 255, 107, 0.05) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
+  animation: loader-grid-drift 12s linear infinite;
+}
+
+.portfolio-loader-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(124, 255, 107, 0.07),
+    transparent
+  );
+  height: 24vh;
+  animation: loader-scan 2.6s linear infinite;
+}
+
+.portfolio-loader-glow {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(51, 255, 0, 0.2), transparent 30%),
+    radial-gradient(circle at 20% 80%, rgba(124, 255, 107, 0.12), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(68, 204, 255, 0.08), transparent 26%);
+  filter: blur(10px);
+  animation: loader-glow 4.4s ease-in-out infinite alternate;
+}
+
+.portfolio-loader-shell {
+  position: relative;
+  width: min(880px, calc(100dvw - 40px));
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124, 255, 107, 0.75), rgba(68, 204, 255, 0.12), rgba(124, 255, 107, 0.45));
+  box-shadow: 0 0 80px rgba(51, 255, 0, 0.18), inset 0 0 24px rgba(124, 255, 107, 0.12);
+  animation: loader-arrive 700ms ease-out both;
+}
+
+.portfolio-loader-frame {
+  position: relative;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.74);
+  padding: clamp(22px, 4vw, 42px);
+  font-family: "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.portfolio-loader-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(124, 255, 107, 0.18);
+  pointer-events: none;
+}
+
+.portfolio-loader-frame::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.13), transparent 48%);
+  animation: loader-sheen 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.portfolio-loader-topline,
+.portfolio-loader-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: rgba(186, 255, 155, 0.78);
+  font-size: 10px;
+}
+
+.portfolio-loader-main {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  align-items: center;
+  gap: clamp(26px, 5vw, 54px);
+  margin: clamp(26px, 5vw, 46px) 0;
+}
+
+.portfolio-loader-orbit {
+  position: relative;
+  aspect-ratio: 1;
+  width: min(210px, 22dvw);
+  min-width: 180px;
+}
+
+.portfolio-loader-ring,
+.portfolio-loader-core,
+.portfolio-loader-sweep {
+  position: absolute;
+  border-radius: 999px;
+}
+
+.portfolio-loader-ring {
+  border: 1px solid rgba(124, 255, 107, 0.35);
+  box-shadow: 0 0 28px rgba(124, 255, 107, 0.16);
+}
+
+.portfolio-loader-ring-a {
+  inset: 0;
+  animation: loader-spin 6s linear infinite;
+}
+
+.portfolio-loader-ring-b {
+  inset: 22px;
+  border-style: dashed;
+  animation: loader-spin 4.2s linear infinite reverse;
+}
+
+.portfolio-loader-ring-c {
+  inset: 52px;
+  border-color: rgba(68, 204, 255, 0.3);
+  animation: loader-pulse 1.7s ease-in-out infinite;
+}
+
+.portfolio-loader-core {
+  inset: 78px;
+  background: #7cff6b;
+  box-shadow: 0 0 34px rgba(124, 255, 107, 0.85);
+}
+
+.portfolio-loader-sweep {
+  inset: 8px;
+  background: conic-gradient(from 0deg, rgba(124, 255, 107, 0.45), transparent 22%, transparent);
+  mask-image: radial-gradient(circle, transparent 48%, black 50%);
+  animation: loader-spin 1.8s linear infinite;
+}
+
+.portfolio-loader-kicker {
+  margin: 0 0 14px;
+  color: #7cff6b;
+  font-size: 12px;
+}
+
+.portfolio-loader-title {
+  margin: 0;
+  color: #f3ffee;
+  font-size: clamp(30px, 5vw, 58px);
+  line-height: 0.98;
+  text-shadow: 0 0 22px rgba(124, 255, 107, 0.32);
+}
+
+.portfolio-loader-text {
+  max-width: 520px;
+  margin: 18px 0 0;
+  color: rgba(217, 255, 209, 0.72);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.portfolio-loader-bar-wrap {
+  display: grid;
+  gap: 12px;
+}
+
+.portfolio-loader-bar {
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 255, 107, 0.35);
+  background: rgba(7, 16, 6, 0.92);
+}
+
+.portfolio-loader-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #33ff00, #d9ffd1, #7cff6b);
+  box-shadow: 0 0 24px rgba(124, 255, 107, 0.68);
+  transition: width 300ms ease;
+}
+
+.portfolio-loader-console {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+  color: rgba(217, 255, 209, 0.58);
+  font-size: 10px;
+}
+
+.portfolio-loader-console span {
+  opacity: 0;
+  transform: translateX(-8px);
+  animation: loader-line 900ms ease forwards;
+}
+
+@keyframes loader-grid-drift {
+  to {
+    background-position: 54px 54px;
+  }
+}
+
+@keyframes loader-scan {
+  from {
+    transform: translateY(-30vh);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes loader-glow {
+  from {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  to {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes loader-sheen {
+  0%,
+  55% {
+    transform: translateX(-35%);
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(35%);
+    opacity: 0;
+  }
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-pulse {
+  50% {
+    transform: scale(1.08);
+    opacity: 0.55;
+  }
+}
+
+@keyframes loader-line {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .portfolio-loader-shell {
+    width: calc(100dvw - 24px);
+    max-height: calc(100dvh - 24px);
+  }
+
+  .portfolio-loader-frame {
+    padding: 18px;
+    letter-spacing: 0.1em;
+  }
+
+  .portfolio-loader-topline {
+    flex-direction: column;
+  }
+
+  .portfolio-loader-main {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+    margin: 22px 0;
+  }
+
+  .portfolio-loader-orbit {
+    width: min(210px, 58vw);
+    min-width: 0;
+    margin: 0 auto;
+  }
+
+  .portfolio-loader-title {
+    font-size: clamp(28px, 11vw, 42px);
+  }
+
+  .portfolio-loader-text {
+    font-size: 11px;
+  }
+
+  .portfolio-loader-status {
+    flex-direction: column;
+  }
+}
+
+@media (max-height: 620px) {
+  .portfolio-loader-main {
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    margin: 20px 0;
+  }
+
+  .portfolio-loader-orbit {
+    width: 140px;
+    min-width: 140px;
+  }
+
+  .portfolio-loader-ring-b {
+    inset: 16px;
+  }
+
+  .portfolio-loader-ring-c {
+    inset: 38px;
+  }
+
+  .portfolio-loader-core {
+    inset: 54px;
+  }
+
+  .portfolio-loader-title {
+    font-size: clamp(28px, 7vh, 44px);
+  }
+
+  .portfolio-loader-console {
+    margin-top: 14px;
+    gap: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-loader-grid,
+  .portfolio-loader-scan,
+  .portfolio-loader-glow,
+  .portfolio-loader-shell,
+  .portfolio-loader-frame::after,
+  .portfolio-loader-ring-a,
+  .portfolio-loader-ring-b,
+  .portfolio-loader-ring-c,
+  .portfolio-loader-sweep,
+  .portfolio-loader-console span {
+    animation: none;
+  }
 }

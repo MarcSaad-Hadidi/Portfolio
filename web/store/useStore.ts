@@ -1,12 +1,27 @@
 import { create } from 'zustand';
-import * as THREE from 'three';
+import type { Vector3 } from 'three';
 
-type Phase = 'ROOM' | 'TRANSITION' | 'TERMINAL';
+export type Phase = 'ROOM' | 'TRANSITION' | 'TERMINAL';
 
-type Line = {
+export type Line = {
     type: 'input' | 'output' | 'error' | 'system';
     content: string;
 };
+
+export type TerminalLink = {
+    label: string;
+    url: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};
+
+const welcomeLines: Line[] = [
+    { type: 'system', content: 'PORTFOLIO_TERMINAL v2.6' },
+    { type: 'output', content: 'Interactive workspace ready.' },
+    { type: 'output', content: 'Type help, work or contact.' },
+];
 
 interface State {
     phase: Phase;
@@ -16,23 +31,37 @@ interface State {
     setLines: (lines: Line[]) => void;
     currentInput: string;
     setCurrentInput: (input: string | ((prev: string) => string)) => void;
-    targetPosition: THREE.Vector3 | null;
-    setTargetPosition: (pos: THREE.Vector3) => void;
-    cameraPosition: THREE.Vector3 | null;
-    setCameraPosition: (pos: THREE.Vector3) => void;
+    targetPosition: Vector3 | null;
+    setTargetPosition: (pos: Vector3) => void;
+    cameraPosition: Vector3 | null;
+    setCameraPosition: (pos: Vector3) => void;
     isBooting: boolean;
     setIsBooting: (booting: boolean) => void;
+    sceneReady: boolean;
+    setSceneReady: (ready: boolean) => void;
+    sceneLoadingProgress: number;
+    setSceneLoadingProgress: (progress: number) => void;
+    sceneLoadingError: boolean;
+    setSceneLoadingError: (error: boolean) => void;
+    terminalLinks: TerminalLink[];
+    setTerminalLinks: (links: TerminalLink[]) => void;
 }
 
 export const useStore = create<State>((set) => ({
     phase: 'ROOM',
-    setPhase: (phase) => set((state) => ({
-        phase,
-        isBooting: phase === 'TERMINAL' ? true : state.isBooting
-    })),
-    lines: [
-        { type: 'system', content: '>>> SYSTEM_READY. WELCOME BACK.' },
-    ],
+    setPhase: (phase) => set((state) => {
+        const enteringTerminal = phase === 'TERMINAL' && state.phase !== 'TERMINAL';
+        const leavingTerminal = phase !== 'TERMINAL';
+
+        return {
+            phase,
+            isBooting: enteringTerminal ? true : leavingTerminal ? false : state.isBooting,
+            lines: enteringTerminal ? welcomeLines : state.lines,
+            currentInput: enteringTerminal ? '' : state.currentInput,
+            terminalLinks: enteringTerminal || leavingTerminal ? [] : state.terminalLinks,
+        };
+    }),
+    lines: welcomeLines,
     addLine: (line) => set((state) => ({ lines: [...state.lines, line] })),
     setLines: (lines) => set({ lines }),
     currentInput: '',
@@ -45,5 +74,15 @@ export const useStore = create<State>((set) => ({
     cameraPosition: null,
     setCameraPosition: (cameraPosition) => set({ cameraPosition }),
     isBooting: false,
-    setIsBooting: (isBooting) => set({ isBooting }),
+    setIsBooting: (isBooting) => set((state) => (
+        state.isBooting === isBooting ? state : { isBooting }
+    )),
+    sceneReady: false,
+    setSceneReady: (sceneReady) => set({ sceneReady }),
+    sceneLoadingProgress: 0,
+    setSceneLoadingProgress: (sceneLoadingProgress) => set({ sceneLoadingProgress }),
+    sceneLoadingError: false,
+    setSceneLoadingError: (sceneLoadingError) => set({ sceneLoadingError }),
+    terminalLinks: [],
+    setTerminalLinks: (terminalLinks) => set({ terminalLinks }),
 }));
