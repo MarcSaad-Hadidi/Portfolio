@@ -1,3 +1,0 @@
-[    1927ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
-[    2000ms] [LOG] [HMR] connected @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
-[  217091ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=CbF0gDNLTSIS30M2TWDgk' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/hot-reloader/app/web-socket.js:55
